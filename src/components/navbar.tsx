@@ -1,6 +1,6 @@
 export const Navbar = () => {
   return (
-    <nav className="w-full h-24 z-10 bg-black flex items-center justify-between pr-20 pl-5">
+    <nav className="w-full h-24 z-10 bg-black flex items-center justify-between pr-20 pl-5 text-white text-2xl font-medium">
       <img src="" alt="Logo Image of SportSee" className="w-44 h-16" />
       <ul className="flex items-center justify-between">
         <li>
