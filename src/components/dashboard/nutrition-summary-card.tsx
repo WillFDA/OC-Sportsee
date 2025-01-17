@@ -10,7 +10,7 @@ export const NutritionSummaryCard = (props: NutritionSummaryCardProps) => {
   const [user, setUser] = useState<User | null>(null);
   useEffect(() => {
     const fetchUser = async () => {
-      const { data } = await apiService.getUserById(12);
+      const { data } = await apiService.getUserById();
       setUser(data);
     };
     fetchUser();
