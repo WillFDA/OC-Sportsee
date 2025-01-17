@@ -1,4 +1,4 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 @theme {
   --color-red: #ff0000;
@@ -10,6 +10,7 @@
   --color-gray-blue: #74798c;
   --color-light-blue-gray: #9b9eac;
   --color-dark-gray: #282d30;
+  --color-light-gray: #fbfbfb;
 }
 
 /*
