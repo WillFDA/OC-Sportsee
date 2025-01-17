@@ -8,7 +8,7 @@ export const BlockChartWrapper = ({
 }: BlockChartWrapperProps) => {
   return (
     <div
-      className={`w-full aspect-square row-span-1 shadow-sm rounded-[5px] ${addedClass}`}
+      className={`w-full aspect-square row-span-1 shadow-xs rounded-[5px] ${addedClass}`}
     >
       {children}
     </div>
