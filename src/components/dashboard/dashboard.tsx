@@ -23,12 +23,12 @@ export const Dashboard = () => {
       <DashboardHeader user={user} />
       <div className="grid grid-cols-12 gap-8">
         <Analytics />
-        <div className="col-span-3 grid-rows-4 grid gap-8">
+        <section className="col-span-3 grid-rows-4 grid gap-8">
           <NutritionSummaryCard type="calorie" />
           <NutritionSummaryCard type="protein" />
           <NutritionSummaryCard type="carbohydrate" />
           <NutritionSummaryCard type="lipid" />
-        </div>
+        </section>
       </div>
     </div>
   );

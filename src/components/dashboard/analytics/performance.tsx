@@ -1,4 +1,4 @@
-import { BlockChartWrapper } from "../block-chart-wrapper";
+import { BlockChartWrapper } from "../ui/block-chart-wrapper";
 
 export const PerformanceChart = () => {
   return (

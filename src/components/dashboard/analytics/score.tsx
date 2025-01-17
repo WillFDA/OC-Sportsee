@@ -1,3 +1,7 @@
+import { BlockChartWrapper } from "../ui/block-chart-wrapper";
+
 export const ScoreChart = () => {
-  return <div className="w-full row-span-1"></div>;
+  return (
+    <BlockChartWrapper addedClass="bg-darkgray">performance</BlockChartWrapper>
+  );
 };

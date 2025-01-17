@@ -15,7 +15,6 @@ export const NutritionSummaryCard = (props: NutritionSummaryCardProps) => {
     };
     fetchUser();
   }, []);
-  console.log(user);
 
   const t = {
     protein: "Proteines",
