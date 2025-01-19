@@ -16,8 +16,6 @@ export const PerformanceChart = () => {
 
   if (!performance) return <div>Loading...</div>;
 
-  console.log(performance);
-  // performance = getUserPerformance
   return (
     <BlockChartWrapper addedClass="bg-darkgray">performance</BlockChartWrapper>
   );
