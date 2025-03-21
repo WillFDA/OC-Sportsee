@@ -1,4 +1,9 @@
-import { Activity, AverageSession, Performance, User } from "../data";
+import {
+  ActivityApi,
+  AverageSession,
+  PerformanceApi,
+  UserApi,
+} from "../interface/data.interface";
 
 const BASE_URL = "http://localhost:3000"; // Ajustez le port selon votre configuration
 const USER_ID = 12;
@@ -9,46 +14,50 @@ export const apiService = {
   /**
    * Récupère toutes les données d'un utilisateur
    */
-  async getUserById(): Promise<{ data: User }> {
+  async getUserById(): Promise<UserApi> {
     const response = await fetch(`${BASE_URL}/user/${USER_ID}`);
     if (!response.ok) {
       throw new Error("Erreur lors de la récupération des données utilisateur");
     }
-    return response.json();
+    const { data } = await response.json();
+    return data;
   },
 
   /**
    * Récupère les données d'activité d'un utilisateur
    */
-  async getUserActivity(): Promise<Activity> {
+  async getUserActivity(): Promise<ActivityApi> {
     const response = await fetch(`${BASE_URL}/user/${USER_ID}/activity`);
     if (!response.ok) {
       throw new Error("Erreur lors de la récupération des activités");
     }
-    return response.json();
+    const { data } = await response.json();
+    return data;
   },
 
   /**
    * Récupère les sessions moyennes d'un utilisateur
    */
-  async getUserAverageSessions(): Promise<AverageSession> {
+  async getUserAverageSessions(): Promise<AverageSession[]> {
     const response = await fetch(
       `${BASE_URL}/user/${USER_ID}/average-sessions`
     );
     if (!response.ok) {
       throw new Error("Erreur lors de la récupération des sessions moyennes");
     }
-    return response.json();
+    const { data } = await response.json();
+    return data.sessions;
   },
 
   /**
    * Récupère les données de performance d'un utilisateur
    */
-  async getUserPerformance(): Promise<Performance> {
+  async getUserPerformance(): Promise<PerformanceApi> {
     const response = await fetch(`${BASE_URL}/user/${USER_ID}/performance`);
     if (!response.ok) {
       throw new Error("Erreur lors de la récupération des performances");
     }
-    return response.json();
+    const { data } = await response.json();
+    return data;
   },
 };

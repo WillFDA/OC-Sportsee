@@ -1,21 +1,14 @@
-import { useEffect, useState } from "react";
-import { User } from "../../data";
-import { apiService } from "../../services/api";
+import { UserApi } from "../../interface/data.interface";
 
 interface NutritionSummaryCardProps {
+  user: UserApi;
   type: "protein" | "carbohydrate" | "lipid" | "calorie";
 }
 
-export const NutritionSummaryCard = (props: NutritionSummaryCardProps) => {
-  const [user, setUser] = useState<User | null>(null);
-  useEffect(() => {
-    const fetchUser = async () => {
-      const { data } = await apiService.getUserById();
-      setUser(data);
-    };
-    fetchUser();
-  }, []);
-
+export const NutritionSummaryCard = ({
+  user,
+  type,
+}: NutritionSummaryCardProps) => {
   const t = {
     protein: "Proteines",
     carbohydrate: "Glucides",
@@ -23,28 +16,26 @@ export const NutritionSummaryCard = (props: NutritionSummaryCardProps) => {
     calorie: "Calories",
   };
 
-  if (!user) return <div>Loading...</div>;
-
   return (
     <div className="w-full row-span-1 flex items-center gap-6 p-8 bg-lightGray rounded-[5px] bg-light-gray">
       <div
         className={`size-[60px] ${
-          props.type === "calorie"
+          type === "calorie"
             ? "bg-red/10"
-            : props.type === "protein"
+            : type === "protein"
             ? "bg-sky-blue/10"
-            : props.type === "carbohydrate"
+            : type === "carbohydrate"
             ? "bg-yellow/10"
             : "bg-pink/10"
         } rounded-[5px] flex items-center justify-center`}
       >
-        <img src={`src/assets/${props.type}.svg`} alt={`${props.type} icon`} />
+        <img src={`src/assets/${type}.svg`} alt={`${type} icon`} />
       </div>
       <div className="flex flex-col items-start">
         <h3 className=" text-xl text-black font-bold">
-          {user?.keyData[`${props.type}Count` as keyof typeof user.keyData]}g
+          {user?.keyData[`${type}Count` as keyof typeof user.keyData]}g
         </h3>
-        <p className=" text-sm text-grayBlue">{t[props.type]}</p>
+        <p className=" text-sm text-grayBlue">{t[type]}</p>
       </div>
     </div>
   );

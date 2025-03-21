@@ -1,4 +1,4 @@
-export interface User {
+export interface UserApi {
   id: number;
   userInfos: UserInfos;
   todayScore?: number;
@@ -19,28 +19,28 @@ export interface KeyData {
   lipidCount: number;
 }
 
-export interface Activity {
+export interface ActivityApi {
   userId: number;
   sessions: Session[];
 }
 
 export interface Session {
-  day: number;
+  day: string;
   kilogram: number;
   calories: number;
 }
 
-export interface AverageSession {
+export interface UserAverageSessionsApi {
   userId: number;
-  sessions: Sessions[];
+  sessions: AverageSession[];
 }
 
-export interface Sessions {
+export interface AverageSession {
   day: number;
   sessionLength: number;
 }
 
-export interface Performance {
+export interface PerformanceApi {
   userId: number;
   kind: Kind;
   data: PerformanceData[];

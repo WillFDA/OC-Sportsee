@@ -1,4 +1,4 @@
-import { User } from "../../data";
+import { User } from "../../interface/data.interface";
 
 interface DashboardHeaderProps {
   user: User;
