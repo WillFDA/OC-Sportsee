@@ -10,8 +10,8 @@ export class DataFormatter {
 
   public static formatDailyActivity(activity: ActivityApi) {
     if (!activity) return [];
-    return activity.sessions.map((session) => ({
-      day: session.day,
+    return activity.sessions.map((session, index) => ({
+      day: index + 1, // Nous permet d'avoir 1, 2, 3 comme dans le figma au lieu de session.day
       kilogram: session.kilogram,
       calories: session.calories,
     }));

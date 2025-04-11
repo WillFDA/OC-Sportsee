@@ -1,7 +1,7 @@
-import { User } from "../../interface/data.interface";
+import { UserApi } from "../../interface/data.interface";
 
 interface DashboardHeaderProps {
-  user: User;
+  user: UserApi;
 }
 
 export const DashboardHeader = ({ user }: DashboardHeaderProps) => {
