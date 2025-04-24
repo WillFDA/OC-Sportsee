@@ -11,6 +11,16 @@ import {
 import { ActivityApi } from "../../../interface/data.interface";
 import { DataFormatter } from "../../../model/data-formatter.model";
 
+const CustomLegend = () => {
+  return (
+    <div className="flex items-center w-full">
+      <div className="w-2 h-2 bg-[#282D30] rounded-full mr-2"></div>
+      <p className="text-sm mr-4">Poids (kg)</p>
+      <div className="w-2 h-2 bg-[#E60000] rounded-full mr-2"></div>
+      <p className="text-sm">Calories brûlées (Kcal)</p>
+    </div>
+  );
+};
 export const DailyActivityChart = ({
   UserActivityData,
 }: {
@@ -47,7 +57,7 @@ export const DailyActivityChart = ({
           <YAxis yAxisId="right" orientation="left" hide={true} />
           <Tooltip
             itemStyle={{
-              backgroundColor: "#FF0000",
+              backgroundColor: "#E60000",
               color: "#FFFFFF",
               padding: "8px",
               fontSize: "7px",
@@ -69,9 +79,19 @@ export const DailyActivityChart = ({
             }}
             labelFormatter={() => ""}
           />
-          <Legend verticalAlign="top" height={36} />
-          <Bar yAxisId="left" dataKey="kilogram" fill="#282D30" />
-          <Bar yAxisId="right" dataKey="calories" fill="#E60000" />
+          <Legend verticalAlign="top" height={36} content={<CustomLegend />} />
+          <Bar
+            yAxisId="left"
+            dataKey="kilogram"
+            fill="#282D30"
+            radius={[4, 4, 0, 0]}
+          />
+          <Bar
+            yAxisId="right"
+            dataKey="calories"
+            fill="#E60000"
+            radius={[4, 4, 0, 0]}
+          />
         </BarChart>
       </ResponsiveContainer>
     </div>
