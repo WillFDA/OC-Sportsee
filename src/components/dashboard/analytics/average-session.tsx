@@ -1,6 +1,7 @@
 import {
   Line,
   LineChart,
+  Rectangle,
   ResponsiveContainer,
   Tooltip,
   TooltipProps,
@@ -27,6 +28,29 @@ const CustomTooltip = ({ active, payload }: CustomTooltipProps) => {
   return null;
 };
 
+interface CustomCursorProps {
+  points?: Array<{ x: number; y: number }>;
+  width?: number;
+  height?: number;
+}
+
+const CustomCursor = ({ points, width, height }: CustomCursorProps) => {
+  if (!points || points.length === 0 || !width || !height) return null;
+
+  const x = points[0].x;
+
+  return (
+    <Rectangle
+      x={x}
+      y={0}
+      width={width - x + 10}
+      height={height + 200}
+      fill="rgba(160, 0, 0, 0.7)"
+      fillOpacity={0.6}
+    />
+  );
+};
+
 const daysMap: { [key: number]: string } = {
   1: "L",
   2: "M",
@@ -43,9 +67,23 @@ export const AverageSessionChart = ({
   UserAverageSessionsData: AverageSession[] | null;
 }) => {
   if (!UserAverageSessionsData) return <div>Loading...</div>;
-  const formattedData = DataFormatter.formatAverageDurationSessions(
+
+  // Création de données augmentées avec des points virtuels au début et à la fin
+  let formattedData = DataFormatter.formatAverageDurationSessions(
     UserAverageSessionsData
   );
+
+  // Si on a des données, on ajoute des points virtuels avant et après
+  if (formattedData.length > 0) {
+    const firstDataPoint = { ...formattedData[0], day: 0 };
+    const lastDataPoint = {
+      ...formattedData[formattedData.length - 1],
+      day: 8,
+    };
+
+    // On ajoute les points virtuels
+    formattedData = [firstDataPoint, ...formattedData, lastDataPoint];
+  }
 
   const durations = formattedData.map((item) => item.duration);
   const minDuration = Math.min(...durations);
@@ -56,13 +94,16 @@ export const AverageSessionChart = ({
 
   return (
     <BlockChartWrapper addedClass="bg-red-600 relative overflow-hidden">
-      <h3 className="text-white text-sm font-medium opacity-60 ml-2 mb-6 absolute top-4 left -4">
+      <h3 className="text-white text-sm font-medium opacity-60 ml-2 mb-6 absolute top-8 left-6 z-20">
         Durée moyenne des
         <br />
         sessions
       </h3>
-      <ResponsiveContainer width="100%" height="90%">
-        <LineChart data={formattedData}>
+      <ResponsiveContainer width="100%" height="100%">
+        <LineChart
+          data={formattedData}
+          margin={{ left: -10, right: -10, bottom: 30, top: 100 }}
+        >
           <defs>
             <linearGradient id="sessionGradient" x1="0" y1="0" x2="1" y2="0">
               <stop offset="0%" stopColor="rgba(255, 255, 255, 0.4)" />
@@ -75,16 +116,12 @@ export const AverageSessionChart = ({
             tickLine={false}
             tick={{ fill: "rgba(255, 255, 255, 0.6)", fontSize: 12 }}
             tickFormatter={(day) => daysMap[day] || ""}
+            domain={[1, 7]}
+            dy={20}
+            allowDataOverflow={true}
           />
           <YAxis hide domain={[minYValue, maxYValue]} />
-          <Tooltip
-            content={<CustomTooltip />}
-            cursor={{
-              stroke: "rgba(160, 0, 0, 0.7)",
-              strokeWidth: 80,
-              strokeOpacity: 0.6,
-            }}
-          />
+          <Tooltip content={<CustomTooltip />} cursor={<CustomCursor />} />
           <Line
             type="natural"
             dataKey="duration"
