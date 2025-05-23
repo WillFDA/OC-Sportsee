@@ -28,20 +28,59 @@ export class DataFormatter {
   static formatPerformance(performance: PerformanceApi) {
     if (!performance) return [];
     const kind = performance.kind;
-    return performance.data.map((data) => ({
+
+    const kindToFrench = {
+      cardio: "Cardio",
+      energy: "Énergie",
+      endurance: "Endurance",
+      strength: "Force",
+      speed: "Vitesse",
+      intensity: "Intensité",
+    };
+
+    const desiredOrder = [
+      "intensity",
+      "speed",
+      "strength",
+      "endurance",
+      "energy",
+      "cardio",
+    ];
+
+    // On mappe les données brutes avec le nom anglais
+    const rawData = performance.data.map((data) => ({
       value: data.value,
       kind: kind[data.kind],
       fullMark: 250,
     }));
+
+    // On ordonne et on ajoute le label français
+    const orderedData = desiredOrder
+      .map((k) => rawData.find((item) => item.kind === k))
+      .filter(Boolean)
+      .map((item) => ({
+        ...item,
+        label:
+          kindToFrench[item!.kind as keyof typeof kindToFrench] || item!.kind,
+      }));
+
+    return orderedData;
   }
 
   static formatScore(userData: UserApi) {
     if (!userData) return [];
     const score = (userData.todayScore || userData.score || 0) * 100;
-    return {
-      name: "Score",
-      score: score,
-      fill: "#FF0000",
-    };
+    return [
+      {
+        name: "Score",
+        score: score,
+        fill: "#FF0000",
+      },
+      {
+        name: "Score",
+        score: 100 - score,
+        fill: "#FBFBFB",
+      },
+    ];
   }
 }

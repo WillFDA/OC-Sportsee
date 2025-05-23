@@ -1,8 +1,6 @@
 import {
-  Legend,
   PolarAngleAxis,
   PolarGrid,
-  PolarRadiusAxis,
   Radar,
   RadarChart,
   ResponsiveContainer,
@@ -17,22 +15,26 @@ export const PerformanceChart = ({
   UserPerformanceData: PerformanceApi;
 }) => {
   if (!UserPerformanceData) return <div>Loading...</div>;
-  const formattedData = DataFormatter.formatPerformance(UserPerformanceData);
+  const data = DataFormatter.formatPerformance(UserPerformanceData);
 
   return (
-    <BlockChartWrapper addedClass="bg-darkgray">
+    <BlockChartWrapper addedClass="bg-dark-gray">
       <ResponsiveContainer width="100%" height="100%">
-        <RadarChart outerRadius={90} data={formattedData}>
-          <PolarGrid />
-          <PolarAngleAxis dataKey="kind" />
-          <PolarRadiusAxis angle={30} domain={[0, 150]} />
+        <RadarChart outerRadius={90} data={data}>
+          <PolarGrid radialLines={false} />
+          <PolarAngleAxis
+            dataKey="label"
+            tick={{
+              fill: "white",
+              fontSize: 12,
+            }}
+          />
           <Radar
             dataKey="value"
-            stroke="#FF0101"
+            stroke="transparent"
             fill="#FF0101"
             fillOpacity={0.7}
           />
-          <Legend />
         </RadarChart>
       </ResponsiveContainer>
     </BlockChartWrapper>
